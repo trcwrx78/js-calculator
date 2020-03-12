@@ -4,15 +4,14 @@ import './App.css';
 
 
 function App() {
-  const { numButtons, opButtons, workButtons, numOne } = useMath()
+  const { numButtons, opButtons, numDisplay } = useMath()
   
   return (
     <div className="App">
       <h1>JavaScript Calculator</h1>
       <div id="display">
-        <p>{numOne}</p>
+        <p>{numDisplay}</p>
       </div>
-      {workButtons}
       {numButtons}
       {opButtons}
     </div>
