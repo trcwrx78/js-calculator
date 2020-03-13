@@ -46,10 +46,13 @@ function Math() {
         const { id } = e.target
         if(id === 'clear'){
             setNumDisplay('0')
+            setNumOne('')
             setOperand('')
         }
 
-        if(id === 'decimal') {
+        if(id === 'decimal' && numDisplay.includes('.')) {
+            return ''
+        } else {
             setNumDisplay(prev => prev + '.')
         }
 
@@ -89,12 +92,13 @@ function Math() {
     }
 
     function calculate(n1, op, n2) {
+        console.log(n1, op, n2)
         if(op === '+') {
             setNumDisplay(parseFloat(n1) + parseFloat(n2))
         }
 
         if(op === '-') {
-            setNumDisplay(parseFloat(n1) - parseFloat(n2))
+            setNumDisplay(((parseFloat(n1) * 100) - (parseFloat(n2) * 100)) / 100)
         }
 
         if(op === 'x') {
