@@ -38,8 +38,13 @@ function Math() {
     })
 
     function handleNum(number) {
-        numDisplay === '0' || toggle ? setNumDisplay(number) : setNumDisplay(prev => prev + number)
-        setToggle(false) 
+        if(!operand){
+            numDisplay === '0' || toggle ? setNumDisplay(number) : setNumDisplay(prev => prev + number)
+            setToggle(false)
+        } else {
+            setNumDisplay(number)
+        }
+        
     }
 
     function handleMath(e) {
@@ -50,10 +55,8 @@ function Math() {
             setOperand('')
         }
 
-        if(id === 'decimal' && numDisplay.includes('.')) {
-            return ''
-        } else {
-            setNumDisplay(prev => prev + '.')
+        if(id === 'decimal') {
+            setNumDisplay(prev => prev.includes('.') ? prev + '' : prev + '.') 
         }
 
         if(id === 'add' || 'subtract' || 'multiply' || 'divide') {
@@ -98,7 +101,7 @@ function Math() {
         }
 
         if(op === '-') {
-            setNumDisplay(((parseFloat(n1) * 100) - (parseFloat(n2) * 100)) / 100)
+            setNumDisplay(parseFloat(n1) - parseFloat(n2))
         }
 
         if(op === 'x') {
