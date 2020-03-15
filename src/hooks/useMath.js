@@ -60,27 +60,43 @@ function Math() {
         }
         
         if (id === 'add') {
-            setOperand('+')
-            setNumDisplay('+')
-            setToggle(true)
+            if (!operand) {
+                setOperand('+')
+                setNumDisplay('+')
+                setToggle(true)
+            } else {
+                calculate(numOne, operand, numDisplay)
+            }
         }
 
         if (id === 'subtract') {
-            setOperand('-')
-            setNumDisplay('-')
-            setToggle(true)
+            if (!operand) {
+                setOperand('-')
+                setNumDisplay('-')
+                setToggle(true)
+            } else {
+                calculate(numOne, operand, numDisplay)
+            }
         }
 
         if (id === 'multiply') {
-            setOperand('x')
-            setNumDisplay('x')
-            setToggle(true)
+            if (!operand) {
+                setOperand('x')
+                setNumDisplay('x')
+                setToggle(true)
+            } else {
+                calculate(numOne, operand, numDisplay)
+            }
         }
 
         if (id === 'divide') {
-            setOperand('/')
-            setNumDisplay('/')
-            setToggle(true)
+            if (!operand) {
+                setOperand('/')
+                setNumDisplay('/')
+                setToggle(true)
+            } else {
+                calculate(numOne, operand, numDisplay)
+            }
         }
 
         if (id === 'equals') {
@@ -92,20 +108,29 @@ function Math() {
 
     function calculate(n1, op, n2) {
         console.log(n1, op, n2)
+        console.log(operand)
         if(op === '+') {
             setNumDisplay(parseFloat(n1) + parseFloat(n2))
+            setNumOne(numDisplay)
+            setOperand('')
         }
 
         if(op === '-') {
             setNumDisplay(parseFloat(n1) - parseFloat(n2))
+            setNumOne(numDisplay)
+            setOperand('')
         }
 
         if(op === 'x') {
             setNumDisplay(parseFloat(n1) * parseFloat(n2))
+            setNumOne(numDisplay)
+            setOperand('')
         }
 
         if(op === '/') {
             setNumDisplay(parseFloat(n1) / parseFloat(n2))
+            setNumOne(numDisplay)
+            setOperand('')
         }
     }
 
