@@ -6,6 +6,7 @@ function Math() {
     const [operand, setOperand] = useState('')
     const [numDisplay, setNumDisplay] = useState('0')
     const [toggle, setToggle] = useState(false)
+    const [holder, setHolder] = useState('')
 
     const nums = ['0','1','2','3','4','5','6','7','8','9']
     const word = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
@@ -38,13 +39,8 @@ function Math() {
     })
 
     function handleNum(number) {
-        if(!operand){
-            numDisplay === '0' || toggle ? setNumDisplay(number) : setNumDisplay(prev => prev + number)
-            setToggle(false)
-        } else {
-            setNumDisplay(number)
-        }
-        
+        numDisplay === '0' || toggle ? setNumDisplay(number) : setNumDisplay(prev => prev + number)
+        setToggle(false)
     }
 
     function handleMath(e) {
@@ -56,11 +52,11 @@ function Math() {
         }
 
         if(id === 'decimal') {
-            setNumDisplay(prev => prev.includes('.') ? prev + '' : prev + '.') 
+            setNumDisplay(prev => prev.includes('.') ? prev + '' : prev + '.')
         }
 
         if(id === 'add' || 'subtract' || 'multiply' || 'divide') {
-            setNumOne(numDisplay)
+            id === 'decimal' ? setHolder(numDisplay) : setNumOne(numDisplay)
         }
         
         if (id === 'add') {
