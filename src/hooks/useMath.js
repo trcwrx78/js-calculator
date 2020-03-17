@@ -2,55 +2,61 @@ import React, { useState } from 'react'
 
 
 function Math() {
-    const [numOne, setNumOne] = useState('')
+    const [lastNum, setLastNum] = useState('')
+    const [prevNum, setPrevNum] = useState('')
+    const [currentNum, setCurrentNum] = useState('0')
     const [operand, setOperand] = useState('')
     const [numDisplay, setNumDisplay] = useState('0')
     const [toggle, setToggle] = useState(false)
     const [holder, setHolder] = useState('')
 
-    const nums = ['0','1','2','3','4','5','6','7','8','9']
-    const word = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+    const nums = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0]
+    const signs = ['/', '×', '+', '-', '.', '=', 'AC']
 
-    const numButtons = nums.map((num, i) => {
+    const numButtons = nums.map((num) => {
         return (
-            <div 
-                key={num} 
-                id={word[i]}
-                className="btn" 
-                onClick={() => handleNum(num)}>
+            <button 
+                key={num}  
+                className="btn"
+                onClick={handleClick}>
                     {num}
-            </div>
+            </button>
         )
     })
 
-    const signs = ['+', '-', 'x', '/', '.', '=', 'AC']
-    const names = ['add', 'subtract', 'multiply', 'divide', 'decimal', 'equals', 'clear']
-
-    const opButtons = signs.map((sym, i) => {
+    const opButtons = signs.map((sym) => {
         return (
-            <div 
-                key={i} 
-                id={names[i]} 
+            <button 
+                key={sym} 
                 className="btn" 
-                onClick={handleMath}>
+                onClick={handleClick}>
                     {sym}
-                </div>
+            </button>
         )
     })
 
-    function handleNum(number) {
-        numDisplay === '0' || toggle ? setNumDisplay(number) : setNumDisplay(prev => prev + number)
-        setToggle(false)
-    }
-
-    function handleMath(e) {
-        const { id } = e.target
-        if(id === 'clear'){
-            setNumDisplay('0')
-            setNumOne('')
-            setOperand('')
+    function handleClick(e) {
+        const { innerText } = e.target
+        
+        switch(innerText){
+            case 'AC': {
+                setCurrentNum('0')
+                setPrevNum('')
+                break
+            }
+            
         }
 
+        if(!Number.isNaN(Number(innerText))) {
+            if(currentNum === '0'){
+                setCurrentNum(innerText)
+            } else {
+                setCurrentNum(prev => prev + innerText)
+            }
+        }
+
+        setLastNum(innerText)
+        /*
         if(id === 'decimal') {
             setNumDisplay(prev => prev.includes('.') ? prev + '' : prev + '.')
         }
@@ -102,11 +108,11 @@ function Math() {
         if (id === 'equals') {
             calculate(numOne, operand, numDisplay)
             setToggle(true)
-        }
+        }*/
         
     }
 
-    function calculate(n1, op, n2) {
+    /*function calculate(n1, op, n2) {
         console.log(n1, op, n2)
         console.log(operand)
         if(op === '+') {
@@ -132,9 +138,9 @@ function Math() {
             setNumOne(numDisplay)
             setOperand('')
         }
-    }
+    }*/
 
-    return { numButtons, opButtons, numDisplay }
+    return { numButtons, opButtons, currentNum, handleClick }
 }
 
 export default Math
