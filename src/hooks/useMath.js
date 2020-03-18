@@ -3,15 +3,12 @@ import React, { useState } from 'react'
 
 function Math() {
     const [lastNum, setLastNum] = useState('')
-    const [prevNum, setPrevNum] = useState('')
+    const [calculation, setCalculation] = useState('')
     const [currentNum, setCurrentNum] = useState('0')
     const [operand, setOperand] = useState('')
-    const [numDisplay, setNumDisplay] = useState('0')
-    const [toggle, setToggle] = useState(false)
-    const [holder, setHolder] = useState('')
 
     const nums = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0]
-    const signs = ['/', '×', '+', '-', '.', '=', 'AC']
+    const signs = ['/', '*', '+', '-', '=']
 
     const numButtons = nums.map((num) => {
         return (
@@ -37,110 +34,72 @@ function Math() {
 
     function handleClick(e) {
         const { innerText } = e.target
-        
+
         switch(innerText){
             case 'AC': {
                 setCurrentNum('0')
-                setPrevNum('')
+                setCalculation('')
+                setOperand('')
                 break
             }
-            
-        }
-
-        if(!Number.isNaN(Number(innerText))) {
-            if(currentNum === '0'){
-                setCurrentNum(innerText)
-            } else {
-                setCurrentNum(prev => prev + innerText)
+            case '=': {
+                const doMath = eval(calculation)
+                setCurrentNum(doMath)
+                setCalculation(doMath)
+            }
+            default: {
+                const e = currentNum === '0' ? innerText : currentNum + innerText
+                setCalculation(e)
+                setCurrentNum(e)
+                setLastNum(innerText)
             }
         }
 
-        setLastNum(innerText)
-        /*
-        if(id === 'decimal') {
-            setNumDisplay(prev => prev.includes('.') ? prev + '' : prev + '.')
-        }
-
-        if(id === 'add' || 'subtract' || 'multiply' || 'divide') {
-            id === 'decimal' ? setHolder(numDisplay) : setNumOne(numDisplay)
-        }
-        
-        if (id === 'add') {
-            if (!operand) {
-                setOperand('+')
-                setNumDisplay('+')
-                setToggle(true)
-            } else {
-                calculate(numOne, operand, numDisplay)
-            }
-        }
-
-        if (id === 'subtract') {
-            if (!operand) {
-                setOperand('-')
-                setNumDisplay('-')
-                setToggle(true)
-            } else {
-                calculate(numOne, operand, numDisplay)
-            }
-        }
-
-        if (id === 'multiply') {
-            if (!operand) {
-                setOperand('x')
-                setNumDisplay('x')
-                setToggle(true)
-            } else {
-                calculate(numOne, operand, numDisplay)
-            }
-        }
-
-        if (id === 'divide') {
-            if (!operand) {
-                setOperand('/')
-                setNumDisplay('/')
-                setToggle(true)
-            } else {
-                calculate(numOne, operand, numDisplay)
-            }
-        }
-
-        if (id === 'equals') {
-            calculate(numOne, operand, numDisplay)
-            setToggle(true)
-        }*/
-        
     }
 
-    /*function calculate(n1, op, n2) {
-        console.log(n1, op, n2)
-        console.log(operand)
-        if(op === '+') {
-            setNumDisplay(parseFloat(n1) + parseFloat(n2))
-            setNumOne(numDisplay)
-            setOperand('')
-        }
+    // function handleClick(e) {
+    //     const { innerText } = e.target
 
-        if(op === '-') {
-            setNumDisplay(parseFloat(n1) - parseFloat(n2))
-            setNumOne(numDisplay)
-            setOperand('')
-        }
+    //     setLastNum(innerText)
+        
+    //     if(!Number.isNaN(Number(innerText))) {
+    //         if(currentNum === '0'){
+    //             setCurrentNum(innerText)
+    //         }else if(operand.includes(lastNum)) {
+    //             setCurrentNum(innerText)
+    //         }else {
+    //             setCurrentNum(prev => prev + innerText)
+    //         }
+    //         return
+    //     }
 
-        if(op === 'x') {
-            setNumDisplay(parseFloat(n1) * parseFloat(n2))
-            setNumOne(numDisplay)
-            setOperand('')
-        }
 
-        if(op === '/') {
-            setNumDisplay(parseFloat(n1) / parseFloat(n2))
-            setNumOne(numDisplay)
-            setOperand('')
-        }
-    }*/
+    //         case '.': {
+    //             if(!currentNum.includes('.')) {
+    //                 setCurrentNum(prev => prev + innerText)
+    //             }
+    //             break
+    //         }
+    //         default: {
+    //             if(!operand) {
+    //                 setOperand(innerText)
+    //                 setCalculation(currentNum)
+    //                 setCurrentNum('')
+    //             } else if (innerText === '=') {
+    //                 const doMath = eval(`${calculation} ${operand} ${currentNum}`)
+    //                 setOperand('')
+    //                 setCalculation(doMath)
+    //                 setCurrentNum(doMath)
+    //             } else {
+    //                 const doMath = eval(`${calculation} ${operand} ${currentNum}`)
+    //                 setOperand(innerText)
+    //                 setCalculation(doMath)
+    //                 setCurrentNum(doMath)
+    //             }
+    //         }
+    //     }
 
-    return { numButtons, opButtons, currentNum, handleClick }
+    return { numButtons, opButtons, currentNum, calculation, operand, handleClick }
 }
 
 export default Math
