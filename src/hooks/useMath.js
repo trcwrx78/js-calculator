@@ -39,22 +39,28 @@ function Math() {
             case 'AC': {
                 setCurrentNum('0')
                 setCalculation('')
-                setOperand('')
                 break
             }
             case '=': {
-                const doMath = eval(calculation)
-                setCurrentNum(doMath)
-                setCalculation(doMath)
+                const doCalc = eval(calculation)
+                setCurrentNum(doCalc)
+                setCalculation(doCalc)
+                break
             }
             default: {
-                const e = currentNum === '0' ? innerText : currentNum + innerText
-                setCalculation(e)
+                let e = undefined
+
+                if(signs.includes(lastNum) && signs.includes(innerText)) {
+                    e = calculation.slice(0, -1) + innerText
+                } else {
+                    e = currentNum === '0' ? innerText : currentNum + innerText
+                }
+
                 setCurrentNum(e)
+                setCalculation(e)
                 setLastNum(innerText)
             }
         }
-
     }
 
     // function handleClick(e) {
@@ -73,7 +79,13 @@ function Math() {
     //         return
     //     }
 
-
+    //     switch(innerText){
+    //         case 'AC': {
+    //             setCurrentNum('0')
+    //             setCalculation('')
+    //             setOperand('')
+    //             break
+    //         }
     //         case '.': {
     //             if(!currentNum.includes('.')) {
     //                 setCurrentNum(prev => prev + innerText)
@@ -103,3 +115,76 @@ function Math() {
 }
 
 export default Math
+
+    //     if(id === 'decimal') {
+    //         setNumDisplay(prev => prev.includes('.') ? prev + '' : prev + '.')
+    //     }
+
+    //     if(id === 'add' || 'subtract' || 'multiply' || 'divide') {
+    //         id === 'decimal' ? setHolder(numDisplay) : setNumOne(numDisplay)
+    //     }
+        
+    //     if (id === 'add') {
+    //         if (!operand) {
+    //             setOperand('+')
+    //             setNumDisplay('+')
+    //             setToggle(true)
+    //         } else {
+    //             calculate(numOne, operand, numDisplay)
+    //         }
+    //     }
+
+    //     if (id === 'subtract') {
+    //         if (!operand) {
+    //             setOperand('-')
+    //             setNumDisplay('-')
+    //             setToggle(true)
+    //         } else {
+    //             calculate(numOne, operand, numDisplay)
+    //         }
+    //     }
+
+    //     if (id === 'multiply') {
+    //         if (!operand) {
+    //             setOperand('x')
+    //             setNumDisplay('x')
+    //             setToggle(true)
+    //         } else {
+    //             calculate(numOne, operand, numDisplay)
+    //         }
+    //     }
+
+    //     if (id === 'divide') {
+    //         if (!operand) {
+    //             setOperand('/')
+    //             setNumDisplay('/')
+    //             setToggle(true)
+    //         } else {
+    //             calculate(numOne, operand, numDisplay)
+    //         }
+    //     }
+
+    //     if (id === 'equals') {
+    //         calculate(numOne, operand, numDisplay)
+    //         setToggle(true)
+    //     }
+        
+    // }
+
+    // function calculate(n1, op, n2) {
+    //     if(op === '+') {
+    //         return parseFloat(n1) + parseFloat(n2)
+    //     }
+
+    //     if(op === '-') {
+    //         return parseFloat(n1) - parseFloat(n2)
+    //     }
+
+    //     if(op === '×') {
+    //         return parseFloat(n1) * parseFloat(n2)
+    //     }
+
+    //     if(op === '/') {
+    //         return parseFloat(n1) / parseFloat(n2)
+    //     }
+    // }
