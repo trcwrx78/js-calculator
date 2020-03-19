@@ -3,17 +3,18 @@ import React, { useState } from 'react'
 
 function Math() {
     const [lastNum, setLastNum] = useState('')
-    const [calculation, setCalculation] = useState('')
-    const [currentNum, setCurrentNum] = useState('0')
-    const [operand, setOperand] = useState('')
+    const [calculation, setCalculation] = useState('0')
 
     const nums = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0]
-    const signs = ['/', '*', '+', '-', '=']
+    const numNames = ['seven', 'eight', 'nine', 'four', 'five', 'six', 'one', 'two', 'three', 'zero']
+    const signs = ['/', '*', '+', '-']
+    const signNames = ['divide', 'multiply', 'add', 'subtract']
 
-    const numButtons = nums.map((num) => {
+    const numButtons = nums.map((num, i) => {
         return (
             <button 
-                key={num}  
+                key={num}
+                id={numNames[i]}  
                 className="btn"
                 onClick={handleClick}>
                     {num}
@@ -21,11 +22,12 @@ function Math() {
         )
     })
 
-    const opButtons = signs.map((sym) => {
+    const opButtons = signs.map((sym, i) => {
         return (
             <button 
-                key={sym} 
-                className="btn" 
+                key={sym}
+                id={signNames[i]}
+                className="btn btn-ops" 
                 onClick={handleClick}>
                     {sym}
             </button>
@@ -37,154 +39,44 @@ function Math() {
 
         switch(innerText){
             case 'AC': {
-                setCurrentNum('0')
-                setCalculation('')
+                setCalculation('0')
                 break
             }
             case '=': {
                 const doCalc = eval(calculation)
-                setCurrentNum(doCalc)
                 setCalculation(doCalc)
+                break
+            }
+            case '.': {
+                const re = calculation.split(/[+\-*/]/)
+                const last = re.slice(-1)[0]
+
+                if(!last.includes('.')) {
+                    setCalculation(prev => prev + '.')
+                }
                 break
             }
             default: {
                 let e = undefined
 
-                if(signs.includes(lastNum) && signs.includes(innerText)) {
-                    e = calculation.slice(0, -1) + innerText
+                if(signs.includes(innerText)){
+                    if(signs.includes(lastNum) && innerText !== '-') {
+                        const last = calculation.split('').reverse()
+                            .findIndex(char => nums.includes(+char))
+                        e = calculation.slice(0, last + 2) + ` ${innerText} `
+                    } else {
+                        e = `${calculation} ${innerText} `
+                    }
                 } else {
-                    e = currentNum === '0' ? innerText : currentNum + innerText
+                    e = calculation === '0' ? innerText : calculation + innerText
                 }
 
-                setCurrentNum(e)
                 setCalculation(e)
-                setLastNum(innerText)
             }
+            setLastNum(innerText)
         }
     }
-
-    // function handleClick(e) {
-    //     const { innerText } = e.target
-
-    //     setLastNum(innerText)
-        
-    //     if(!Number.isNaN(Number(innerText))) {
-    //         if(currentNum === '0'){
-    //             setCurrentNum(innerText)
-    //         }else if(operand.includes(lastNum)) {
-    //             setCurrentNum(innerText)
-    //         }else {
-    //             setCurrentNum(prev => prev + innerText)
-    //         }
-    //         return
-    //     }
-
-    //     switch(innerText){
-    //         case 'AC': {
-    //             setCurrentNum('0')
-    //             setCalculation('')
-    //             setOperand('')
-    //             break
-    //         }
-    //         case '.': {
-    //             if(!currentNum.includes('.')) {
-    //                 setCurrentNum(prev => prev + innerText)
-    //             }
-    //             break
-    //         }
-    //         default: {
-    //             if(!operand) {
-    //                 setOperand(innerText)
-    //                 setCalculation(currentNum)
-    //                 setCurrentNum('')
-    //             } else if (innerText === '=') {
-    //                 const doMath = eval(`${calculation} ${operand} ${currentNum}`)
-    //                 setOperand('')
-    //                 setCalculation(doMath)
-    //                 setCurrentNum(doMath)
-    //             } else {
-    //                 const doMath = eval(`${calculation} ${operand} ${currentNum}`)
-    //                 setOperand(innerText)
-    //                 setCalculation(doMath)
-    //                 setCurrentNum(doMath)
-    //             }
-    //         }
-    //     }
-
-    return { numButtons, opButtons, currentNum, calculation, operand, handleClick }
+    return { numButtons, opButtons, calculation, handleClick }
 }
 
 export default Math
-
-    //     if(id === 'decimal') {
-    //         setNumDisplay(prev => prev.includes('.') ? prev + '' : prev + '.')
-    //     }
-
-    //     if(id === 'add' || 'subtract' || 'multiply' || 'divide') {
-    //         id === 'decimal' ? setHolder(numDisplay) : setNumOne(numDisplay)
-    //     }
-        
-    //     if (id === 'add') {
-    //         if (!operand) {
-    //             setOperand('+')
-    //             setNumDisplay('+')
-    //             setToggle(true)
-    //         } else {
-    //             calculate(numOne, operand, numDisplay)
-    //         }
-    //     }
-
-    //     if (id === 'subtract') {
-    //         if (!operand) {
-    //             setOperand('-')
-    //             setNumDisplay('-')
-    //             setToggle(true)
-    //         } else {
-    //             calculate(numOne, operand, numDisplay)
-    //         }
-    //     }
-
-    //     if (id === 'multiply') {
-    //         if (!operand) {
-    //             setOperand('x')
-    //             setNumDisplay('x')
-    //             setToggle(true)
-    //         } else {
-    //             calculate(numOne, operand, numDisplay)
-    //         }
-    //     }
-
-    //     if (id === 'divide') {
-    //         if (!operand) {
-    //             setOperand('/')
-    //             setNumDisplay('/')
-    //             setToggle(true)
-    //         } else {
-    //             calculate(numOne, operand, numDisplay)
-    //         }
-    //     }
-
-    //     if (id === 'equals') {
-    //         calculate(numOne, operand, numDisplay)
-    //         setToggle(true)
-    //     }
-        
-    // }
-
-    // function calculate(n1, op, n2) {
-    //     if(op === '+') {
-    //         return parseFloat(n1) + parseFloat(n2)
-    //     }
-
-    //     if(op === '-') {
-    //         return parseFloat(n1) - parseFloat(n2)
-    //     }
-
-    //     if(op === '×') {
-    //         return parseFloat(n1) * parseFloat(n2)
-    //     }
-
-    //     if(op === '/') {
-    //         return parseFloat(n1) / parseFloat(n2)
-    //     }
-    // }

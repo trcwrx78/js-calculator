@@ -4,19 +4,21 @@ import './App.css';
 
 
 function App() {
-  const { numButtons, opButtons, currentNum, calculation, operand, handleClick } = useMath()
+  const { numButtons, opButtons, calculation, handleClick } = useMath()
   
   return (
-    <div className="App">
-      <h1>JavaScript Calculator</h1>
+    <div className="calculator">
+      <h1>fcc calculator</h1>
       <div id="display">
-        <small>{calculation} {operand}</small>
-        <p>{currentNum}</p>
+        <p>{calculation}</p>
       </div>
-      <button className="btn" onClick={handleClick}>AC</button>
-      {numButtons}
-      {opButtons}
-      <button className="btn" onClick={handleClick}>.</button>
+      <div className="container">
+        <button id = "clear" className="btn btn-clear" onClick={handleClick}>AC</button>
+        {numButtons}
+        {opButtons}
+        <button id="decimal" className="btn" onClick={handleClick}>.</button>
+        <button id="equals" className="btn btn-equals" onClick={handleClick}>=</button>
+      </div>
     </div>
   );
 }
