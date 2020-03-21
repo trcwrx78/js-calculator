@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Orbitron|Paytone+One|Press+Start+2P|Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Orbitron|Paytone+One|Roboto&display=swap');
 
 :root {
   --ff-primary: 'Paytone One', sans-serif;
-  --ff-secondary: 'Press Start 2P', cursive;
   --ff-keys: 'Roboto', sans-serif;
   --ff-display: 'Orbitron', sans-serif;
   
